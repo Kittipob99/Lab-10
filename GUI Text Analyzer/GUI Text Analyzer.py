@@ -1,0 +1,93 @@
+import tkinter as tk
+
+def count_character():
+    text = entry_text.get()
+    character = entry_character.get()
+
+    if character == "":
+        result_label.config(
+            text="Please enter a character to count!"
+        )
+    elif len(character) != 1:
+        result_label.config(
+            text="Please enter only one character!"
+        )
+    else:
+        count = text.lower().count(character.lower())
+        result_label.config(
+            text=f"Character '{character}' appears {count} times."
+        )
+
+def count_vowels():
+    text = entry_text.get().lower()
+    vowels = "aeiou"
+    count = 0
+
+    for character in text:
+        if character in vowels:
+            count += 1
+
+    result_label.config(text=f"Number of vowels: {count}")
+
+def check_palindrome():
+    text = entry_text.get().lower()
+
+    # Ignore spaces and punctuation
+    cleaned_text = ""
+
+    for character in text:
+        if character.isalnum():
+            cleaned_text += character
+
+    if cleaned_text == "":
+        result_label.config(text="Please enter some text!")
+    elif cleaned_text == cleaned_text[::-1]:
+        result_label.config(text="It is a palindrome!")
+    else:
+        result_label.config(text="It is not a palindrome.")
+
+window = tk.Tk()
+window.title("GUI Text Analyzer")
+window.geometry("450x300")
+
+title_label = tk.Label(
+    window, text="Text Analyzer", font=("Arial", 18)
+)
+title_label.grid(row=0, column=0, columnspan=2, pady=10)
+
+text_label = tk.Label(window, text="Enter text:")
+text_label.grid(row=1, column=0, padx=10, pady=5, sticky="e")
+
+entry_text = tk.Entry(window, width=30)
+entry_text.grid(row=1, column=1, padx=10, pady=5)
+
+character_label = tk.Label(
+    window, text="Character to count:"
+)
+character_label.grid(row=2, column=0, padx=10, pady=5, sticky="e")
+
+entry_character = tk.Entry(window, width=10)
+entry_character.grid(row=2, column=1, padx=10, pady=5, sticky="w")
+
+button_count = tk.Button(
+    window, text="Count Character", command=count_character
+)
+button_count.grid(row=3, column=0, padx=5, pady=8)
+
+button_vowels = tk.Button(
+    window, text="Count Vowels", command=count_vowels
+)
+button_vowels.grid(row=3, column=1, padx=5, pady=8, sticky="w")
+
+button_palindrome = tk.Button(
+    window, text="Check Palindrome", command=check_palindrome
+)
+button_palindrome.grid(row=4, column=0, columnspan=2, pady=5)
+
+result_label = tk.Label(
+    window, text="Result will appear here",
+    font=("Arial", 11), wraplength=400
+)
+result_label.grid(row=5, column=0, columnspan=2, pady=15)
+
+window.mainloop()
